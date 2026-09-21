@@ -2,8 +2,12 @@
   "name": "jevseek",
   "version": "0.0.1",
   "private": true,
+  "description": "jevSeek — Ctrl+F for videos. A Chrome extension that finds the moment a YouTube video talks about something, using Jev (TypeSafe AI) to judge every caption segment in one request.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "type": "module",
-  "description": "jevSeek — 動画に Ctrl+F を。YouTube の字幕を Jev で一括判定し、「〜の話」をした秒数へ飛ぶ拡張機能（starter）",
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "build:ext": "tsx scripts/build-extension.ts",

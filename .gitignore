@@ -2,3 +2,4 @@ node_modules
 dist
 .env
 recordings/*.jsonl
+.DS_Store
