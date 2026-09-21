@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>jevSeek — UI preview</title>
+  <link rel="stylesheet" href="../src/extension/styles.css" />
+  <style>
+    /* YouTube の watch ページを最低限だけ真似た土台。拡張機能の CSS はそのまま */
+    body { margin: 0; background: #0f0f0f; color: #f1f1f1; font-family: "Roboto", system-ui, sans-serif; }
+    .stage { width: 960px; margin: 48px auto; }
+    #movie_player { position: relative; width: 960px; height: 540px; background: #1a1a1a radial-gradient(ellipse at 40% 40%, #2a2a2a, #111 70%); border-radius: 12px; overflow: hidden; }
+    .ytp-chrome-bottom { position: absolute; left: 12px; right: 12px; bottom: 36px; }
+    .ytp-progress-bar { position: relative; height: 3px; background: rgba(255,255,255,0.25); }
+    .ytp-play-progress { position: absolute; left: 0; top: 0; height: 100%; width: 22%; background: #f03; }
+    .ytp-scrubber { position: absolute; left: 22%; top: 50%; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%; background: #f03; }
+    .title { margin: 16px 4px 0; font-size: 18px; font-weight: 500; }
+    .note { color: #717171; font-size: 12px; margin: 8px 4px; }
+    /* プレビューではパネルを常時表示 */
+    .jevseek { display: block; opacity: 1; }
+    .jevseek-heat { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div id="movie_player">
+      <div class="jevseek">
+        <div class="jevseek-bar">
+          <span class="jevseek-brand">jevSeek</span>
+          <input class="jevseek-input" type="text" value="値段を言ったところ" spellcheck="false" />
+          <span class="jevseek-meta">0.4s</span>
+        </div>
+        <ol class="jevseek-hits">
+          <li class="jevseek-hit is-selected"><span class="jevseek-time">3:06</span><span class="jevseek-text">ボディだけで三十二万八千円です。税込みで。 三十二万八千円。うーん、なかなかですね。</span><span class="jevseek-p"><i style="width:94%"></i></span></li>
+          <li class="jevseek-hit"><span class="jevseek-time">3:36</span><span class="jevseek-text">下取りに出せば実質は二十万台にはなりますね。 なるほど。</span><span class="jevseek-p"><i style="width:71%"></i></span></li>
+          <li class="jevseek-hit"><span class="jevseek-time">8:12</span><span class="jevseek-text">値段は高いけど、動きものを撮る人には価値がある。</span><span class="jevseek-p"><i style="width:58%"></i></span></li>
+        </ol>
+        <div class="jevseek-status">30 segments · captions ja</div>
+      </div>
+      <div class="ytp-chrome-bottom">
+        <div class="ytp-progress-bar">
+          <canvas class="jevseek-heat"></canvas>
+          <div class="ytp-play-progress"></div>
+          <div class="ytp-scrubber"></div>
+        </div>
+      </div>
+    </div>
+    <div class="title">【架空】新型ミラーレス機レビュー対談（合成データ）</div>
+    <div class="note">docs/02_ui.md の見た目確認用。拡張機能の styles.css をそのまま読んでいる。ブラウザで開くだけ。</div>
+  </div>
+  <script>
+    // 熱量の描画（content.ts の drawHeat と同じ式）
+    const heat = [0,0,0,0,0,0,0.05,0.1,0.15,0.1,0.05,0,0.3,0.92,0.8,0.7,0.2,0.05,0,0,0.1,0.2,0.1,0,0,0,0.15,0.2,0.62,0.4,0.1];
+    const dur = 534, segLen = dur / heat.length;
+    const cv = document.querySelector(".jevseek-heat"), bar = cv.parentElement;
+    const w = bar.clientWidth, h = 16, dpr = devicePixelRatio || 1;
+    cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + "px"; cv.style.height = h + "px";
+    const ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+    heat.forEach((p, i) => {
+      if (p < 0.12) return;
+      const x = (i * segLen / dur) * w, x2 = ((i + 1) * segLen / dur) * w, barH = 3 + p * (h - 3);
+      const rgb = getComputedStyle(cv).getPropertyValue("--jevseek-accent-rgb").trim() || "255, 255, 255";
+      ctx.fillStyle = `rgba(${rgb},${0.25 + 0.7 * p})`; ctx.fillRect(x, h - barH, Math.max(1.5, x2 - x - 0.5), barH);
+    });
+    const fx = (186 / dur) * w; ctx.fillStyle = "#fff"; ctx.fillRect(Math.round(fx) - 1, 0, 2, h);
+  </script>
+</body>
+</html>
