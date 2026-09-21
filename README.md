@@ -103,7 +103,7 @@ Working end to end with a real key. On the bundled evaluation set, hit@1 is 6/6 
 
 ## Contributing
 
-Issues and pull requests are welcome. Before changing a question wording, window size, or threshold, run `npm run eval` before and after and put both numbers in the PR (see `docs/05_verification.md`). `CLAUDE.md` holds the working rules for the codebase and is written for [Claude Code](https://claude.com/claude-code), but the rules apply to humans too.
+Issues and pull requests are welcome at [github.com/item-develop/jevseek](https://github.com/item-develop/jevseek). Before changing a question wording, window size, or threshold, run `npm run eval` before and after and put both numbers in the PR (see `docs/05_verification.md`). `CLAUDE.md` holds the working rules for the codebase and is written for [Claude Code](https://claude.com/claude-code), but the rules apply to humans too.
 
 ## License
 

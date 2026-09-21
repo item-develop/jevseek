@@ -4,6 +4,14 @@
   "private": true,
   "description": "jevSeek — Ctrl+F for videos. A Chrome extension that finds the moment a YouTube video talks about something, using Jev (TypeSafe AI) to judge every caption segment in one request.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/item-develop/jevseek.git"
+  },
+  "homepage": "https://github.com/item-develop/jevseek#readme",
+  "bugs": {
+    "url": "https://github.com/item-develop/jevseek/issues"
+  },
   "engines": {
     "node": ">=20"
   },
